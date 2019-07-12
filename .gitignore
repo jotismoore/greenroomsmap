@@ -1,2 +1,4 @@
 node_modules
-
+*.idea
+Idea
+client_secret.json
