@@ -289,8 +289,11 @@ body {
     display: block;
     font-size: 0.55em;
     font-weight: 400;
-    opacity: 0.75; }
-
+    opacity: 0.75;
+    }
+.custom-header small a {
+    color: white;
+}
 .custom-body {
     padding: 30px;
     background-color: #fff; }

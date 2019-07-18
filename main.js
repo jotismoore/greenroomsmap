@@ -36,9 +36,7 @@ function launchMapPlacements(places) {
     var template = Handlebars.compile($('#marker-content-template').html());
 
     $.each(places, function(i, e) {
-        // console.log(e.Long, e.Lat);
         if (e.Long && e.Lat) {
-            console.log(e.Lat,e.Long)
             var marker = new google.maps.Marker({
                 map: map,
                 icon: markerIcon,
@@ -64,9 +62,10 @@ function launchMapPlacements(places) {
                     title: e.Name,
                     subtitle: e.Instagram,
                     bgImg: e.Image,
-                    body:   '<p>' + e.Town + '<br/>' + e.Address + '</p>' +
+                    body:   '<p>' + e.Address + '</p>' +
                             '<p>' + e.Copy + '</p>' +
-                            '<p>Website: <a href="http://' + e.Website + '" target="_blank">' + e.Website + '</a></p>'
+                            '<p>Website: <a href="http://' + e.Website + '" target="_blank">' + e.Website + '</a></p>' +
+                            '<p>Instagram: <a href="https://www.instagram.com/' + e.Instagram + '" target="_blank">@' + e.Instagram + '</a></p>'
                 }),
                 callbacks: {
                     open: function() {
