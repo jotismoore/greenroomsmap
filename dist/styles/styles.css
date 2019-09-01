@@ -1,3 +1,7 @@
+body {
+    position: relative;
+}
+
 .si-float-wrapper {
     position: absolute;
     width: 100%; }
@@ -245,6 +249,7 @@ body {
 .custom-window {
     top: 30px;
     max-width: 400px;
+    min-width: 400px;
     -webkit-transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
@@ -322,6 +327,33 @@ body {
     cursor: pointer; }
 .custom-close:hover, .custom-close:focus, .custom-close:active {
     background-color: rgba(28, 28, 26, 0.8); }
+
+#pac-input {
+    position: absolute;
+    left: 3%;
+    bottom: 5%;
+    width: 30%;
+    height: 40px;
+    padding: 0 0 0 10px;
+    box-sizing: border-box;
+    border: 2px solid #6e7c7c;
+    z-index: 1;
+}
+
+.pac-container{
+    margin-top: -220px;
+}
+
+.st-btn {
+    width: calc(20% - 10px);
+    text-align: center;
+    background-color: #6e7c7c;
+    margin: 5px 5px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding-top: 3px;
+    cursor: pointer;
+}
 
 @media (min-width: 992px) {
     .custom-window {

@@ -32,7 +32,7 @@ function initClient() {
 	// Listen for sign-in state changes.
 	listMajors();
   }, function(error) {
-		console.log(JSON.stringify(error, null, 2));
+		console.error(JSON.stringify(error, null, 2));
   });
 }
 
@@ -67,9 +67,9 @@ function listMajors() {
 		launchMapPlacements(placements);
 
 	} else {
-		console.log('No data found.');
+		console.error('No data found.');
 	}
   }, function(response) {
-	   console.log('Error: ' + response.result.error.message);
+	   console.error('Error: ' + response.result.error.message);
   });
 }

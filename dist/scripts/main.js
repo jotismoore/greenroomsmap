@@ -42,19 +42,17 @@ function launchMapPlacements(places) {
                 icon: markerIcon,
                 position: new google.maps.LatLng(e.Lat,e.Long)
             });
+            var random = Math.floor(Math.random() * 10000);
             var info = new SnazzyInfoWindow($.extend({}, {
                 marker: marker,
                 placement: 'top',
                 panOnOpen: true,
                 wrapperClass: 'custom-window',
-                offset: {
-                    top: '-22px'
-                },
                 edgeOffset: {
-                    top: 0,
-                    right: 0,
+                    top: 100,
+                    right: 100,
                     bottom: 0,
-                    left: 0
+                    left: 100
                 },
                 border: false,
                 closeButtonMarkup: '<button type="button" class="custom-close">&#215;</button>',
@@ -62,20 +60,30 @@ function launchMapPlacements(places) {
                     title: e.Name,
                     subtitle: e.Instagram,
                     bgImg: e.Image,
-                    body:   '<p>' + e.Address + '</p>' +
-                            '<p>' + e.Copy + '</p>' +
-                            '<p>Website: <a href="http://' + e.Website + '" target="_blank">' + e.Website + '</a></p>' +
-                            '<p>Instagram: <a href="https://www.instagram.com/' + e.Instagram + '" target="_blank">@' + e.Instagram + '</a></p>'
+                    address: e.Address,
+                    copy: e.Copy,
+                    website: e.Website,
+                    share: random,
+                    lat: e.Lat,
+                    long: e.Long
                 }),
                 callbacks: {
                     open: function() {
-                        // $('.custom-window').close();
+                        $('.custom-window').removeClass('active');
                         $(this.getWrapper()).addClass('open');
                     },
                     afterOpen: function() {
                         var wrapper = $(this.getWrapper());
                         wrapper.addClass('active');
                         wrapper.find('.custom-close').on('click', closeDelayHandler);
+                        window.__sharethis__.load('inline-share-buttons', {
+                            alignment: 'center',
+                            id: random + '-inline-share-buttons',
+                            enabled: true,
+                            networks: ['facebook', 'twitter', 'pinterest', 'email', 'whatsapp'],
+                            url: e.Website,
+                            username: e.Instagram
+                        });
                     },
                     beforeClose: function() {
                         if (!closeDelayed) {
@@ -102,5 +110,40 @@ function launchMapPlacements(places) {
                 info.close();
             }, 300);
         };
+    });
+
+    var input = document.getElementById('pac-input');
+    var options = {
+        componentRestrictions: {country: 'uk'}
+    };
+    var searchBox = new google.maps.places.SearchBox(input, options);
+
+    map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+    });
+
+    searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            return;
+        }
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+            if (!place.geometry) {
+                console.error("Returned place contains no geometry");
+                return;
+            }
+
+            if (place.geometry.viewport) {
+                // Only geocodes have viewport.
+                bounds.union(place.geometry.viewport);
+            } else {
+                bounds.extend(place.geometry.location);
+            }
+        });
+        map.fitBounds(bounds);
     });
 }
