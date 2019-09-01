@@ -299,9 +299,16 @@ body {
 .custom-header small a {
     color: white;
 }
+.custom-header small + small {
+    padding-top: 10px;
+    font-size: 12px;
+}
 .custom-body {
     padding: 30px;
-    background-color: #fff; }
+    background-color: #eff5f6; }
+.jemmas-grey {
+    background-color: #eff5f6;
+}
 .custom-body p {
     margin: 0; }
 .custom-body * + p {

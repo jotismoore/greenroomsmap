@@ -21,15 +21,15 @@
             <h1 class="custom-header">
                 {{#if title}}{{title}}{{/if}}
                 {{#if subtitle}}<small><a href="https://www.instagram.com/{{subtitle}}" target="_blank">@{{subtitle}}</a></small>{{/if}}
+                {{#if copy}}<small>{{copy}}</small>{{/if}}
             </h1>
             <div class="custom-body">
                 {{#if address}}<p>{{address}}</p>{{/if}}
                 <p><a href="https://www.google.com/maps/search/?api=1&query={{lat}},{{long}}" target="_blank">Get Directions</a></p>
-                {{#if copy}}<p>{{copy}}</p>{{/if}}
                 {{#if website}}<p>Website: <a href="http://{{website}}" target="_blank">{{website}}</a></p>{{/if}}
                 {{#if subtitle}}<p>Instagram: <a href="https://www.instagram.com/{{subtitle}}" target="_blank">@{{subtitle}}</a></p>{{/if}}
             </div>
-            <div id="{{share}}-inline-share-buttons"></div>
+            <div id="{{share}}-inline-share-buttons" class="jemmas-grey"></div>
         </section>
     </script>
     <input id="pac-input" class="controls" type="text" placeholder="Search By Location">
