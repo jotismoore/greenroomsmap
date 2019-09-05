@@ -61,7 +61,7 @@ function listMajors() {
 				'Code': row[7],
 				'Image': row[8],
 				'Copy': row[9]
-			}
+			};
 			placements.push(placeObject);
 		}
 		launchMapPlacements(placements);
