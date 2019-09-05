@@ -145,6 +145,9 @@
   .si-wrapper-top.active {
     width: 100% !important;
     max-width: none !important;
+    padding-left: 17px;
+    padding-right: 17px;
+    box-sizing: border-box;
   }
   .si-float-wrapper {
     left: 0 !important;
