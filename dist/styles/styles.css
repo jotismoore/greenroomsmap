@@ -348,9 +348,13 @@ body {
     border-radius: 10px;
 }
 
+.gmnoprint {
+    display: none;
+}
+
 @media only screen and (max-width: 667px) {
     #pac-input {
-        width: 84%;
+        width: 94%;
         opacity: 1;
         transition: opacity .25s ease-in-out;
         -moz-transition: opacity .25s ease-in-out;
