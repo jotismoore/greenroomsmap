@@ -34,6 +34,7 @@ function launchMapPlacements(places) {
     };
 
     var template = Handlebars.compile($('#marker-content-template').html());
+    var widthOverwrite = window.innerWidth > 667 ? 100 : 0;
 
     $.each(places, function(i, e) {
         if (e.Long && e.Lat) {
@@ -50,9 +51,9 @@ function launchMapPlacements(places) {
                 wrapperClass: 'custom-window',
                 edgeOffset: {
                     top: 100,
-                    right: 100,
+                    right: widthOverwrite,
                     bottom: 0,
-                    left: 100
+                    left: widthOverwrite
                 },
                 border: false,
                 closeButtonMarkup: '<button type="button" class="custom-close">&#215;</button>',
@@ -76,6 +77,7 @@ function launchMapPlacements(places) {
                         var wrapper = $(this.getWrapper());
                         wrapper.addClass('active');
                         wrapper.find('.custom-close').on('click', closeDelayHandler);
+                        $('#pac-input').addClass('opened');
                         window.__sharethis__.load('inline-share-buttons', {
                             alignment: 'center',
                             id: random + '-inline-share-buttons',
@@ -96,6 +98,7 @@ function launchMapPlacements(places) {
                         var wrapper = $(this.getWrapper());
                         wrapper.find('.custom-close').off();
                         wrapper.removeClass('open');
+                        $('#pac-input').removeClass('opened');
                         closeDelayed = false;
                     }
                 }
