@@ -43,12 +43,12 @@ function initClient() {
 function listMajors() {
   gapi.client.sheets.spreadsheets.values.get({
 	spreadsheetId: '1lwo34dI5758vP0LB8eO3enGQBv6nM0xgPm6vzZeNgnQ',
-	range: 'A2:J',
+	range: 'A2:J'
   }).then(function(response) {
 	var range = response.result;
 	if (range.values.length > 0) {
 		
-	  	for (i = 0; i < range.values.length; i++) {
+	  	for (var i = 0; i < range.values.length; i++) {
 			var row = range.values[i];
 			var placeObject = {
 				'Town': row[0],
