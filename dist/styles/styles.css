@@ -1,5 +1,8 @@
 body {
     position: relative;
+    font-family: europa,sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 @keyframes loading-ring {
@@ -141,7 +144,7 @@ body {
     max-width: 100%;
     max-height: 100%;
     padding: 0;
-    background-color: #eee; }
+    background-color: #f2f2f2; }
 .si-has-border .si-content-wrapper {
     border: 1px solid #bbb; }
 
@@ -156,7 +159,6 @@ body {
     outline: none;
     background-color: transparent;
     color: inherit;
-    font-family: Arial, Baskerville, monospace;
     font-size: 24px;
     cursor: pointer;
     opacity: 0.5;
@@ -198,7 +200,7 @@ body {
     border-top-color: #bbb; }
 
 .si-pointer-bg-top {
-    border-top-color: #eee; }
+    border-top-color: #f2f2f2; }
 .si-has-border .si-pointer-bg-top {
     top: -1px;
     margin-bottom: 0px; }
@@ -211,7 +213,7 @@ body {
     border-bottom-color: #bbb; }
 
 .si-pointer-bg-bottom {
-    border-bottom-color: #eee; }
+    border-bottom-color: #f2f2f2; }
 .si-has-border .si-pointer-bg-bottom {
     bottom: -1px;
     margin-top: 0px; }
@@ -224,7 +226,7 @@ body {
     border-left-color: #bbb; }
 
 .si-pointer-bg-left {
-    border-left-color: #eee; }
+    border-left-color: #f2f2f2; }
 .si-has-border .si-pointer-bg-left {
     left: -1px;
     margin-right: 0px; }
@@ -237,7 +239,7 @@ body {
     border-right-color: #bbb; }
 
 .si-pointer-bg-right {
-    border-right-color: #eee; }
+    border-right-color: #f2f2f2; }
 .si-has-border .si-pointer-bg-right {
     right: -1px;
     margin-left: 0px; }
@@ -250,6 +252,12 @@ body {
     height: 100%;
     margin: 0;
     font-size: 1.4rem;}
+
+.greenrooms__container__map {
+    width: 100%;
+    height: 100%;
+    position: relative
+}
 
 .map-canvas {
     width: 100%;
@@ -332,10 +340,13 @@ body {
     font-size: 12px;
 }
 .custom-body {
-    padding: 30px;
-    background-color: #eff5f6; }
+    padding: 10px 20px;
+    background-color: #f2f2f2; }
+.custom-body__website {
+    font-size: 14px;
+}
 .jemmas-grey {
-    background-color: #eff5f6;
+    background-color: #f2f2f2;
 }
 .custom-body p {
     margin: 0; }
@@ -363,42 +374,95 @@ body {
 .custom-close:hover, .custom-close:focus, .custom-close:active {
     background-color: rgba(28, 28, 26, 0.8); }
 
-#pac-input {
+.greenrooms__container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+}
+.greenrooms__container__search {
+    height: 100%;
+    border-right: 1px solid #6e7c7c;
+    width: 0;
+    position: relative;
+    transition: width .7s cubic-bezier(.4,0,.2,1);
+}
+.greenrooms__container__search.drawer {
+    width: 379px;
+}
+.greenrooms__container__search__close {
+    width: 50px;
+    height: 50px;
     position: absolute;
-    left: 3%;
-    bottom: 5%;
-    width: 30%;
+    top: 0;
+    right: -50px;
+    background-color: #4b4949;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px;
+    z-index: 10;
+    box-sizing: border-box;
+}
+.greenrooms__container__search__close:before {
+    content: url(../images/Search_Icon.svg);
+    color: white;
+}
+.greenrooms__container__search__clear-search {
+    overflow: auto;
+    margin: 10px 10px 10px 20px;
+    box-sizing: border-box;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.greenrooms__container__search__new {
+    height: calc(100% - 60px);
+    overflow: auto;
+    margin: 10px 10px 10px 20px;
+    box-sizing: border-box;
+}
+.greenrooms__container__search__new h2 {
+    color: #6e7c7c;
+    margin-bottom: 0;
+    font-size: 18px;
+}
+.greenrooms__container__search__new p {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.greenrooms__container__search__new p a {
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #6e7c7c;
+}
+.greenrooms__container__search__input {
+    width: calc(100% - 20px);
     height: 40px;
     padding: 0 0 0 10px;
     box-sizing: border-box;
     border: 2px solid #6e7c7c;
-    z-index: 1;
-    border-radius: 10px;
-    opacity: 1;
-    transition: opacity .25s ease-in-out;
-    -moz-transition: opacity .25s ease-in-out;
-    -webkit-transition: opacity .25s ease-in-out;
-}
-#pac-input.opened {
-    opacity: 0;
-}
-
-#pac-input:focus {
-    outline: none;
+    margin: 10px;
 }
 
 .gmnoprint {
     display: none;
 }
 
+body .gm-style {
+    font-family: europa,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
 @media only screen and (max-width: 667px) {
-    #pac-input {
-        width: 94%;
-    }
+
 }
 
 .pac-container{
-    margin-top: -220px;
+    /*margin-top: -220px;*/
 }
 
 .st-btn {
