@@ -6,13 +6,14 @@
     <title>Title</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-    <link rel="stylesheet" href="styles/snazzy-info-window.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBa591SHRqKbeK1VqLN1rzpn_qc2zU8ec&libraries=places&components=country:uk"></script>
     <script src="scripts/snazzy-info-window.min.js"></script>
     <script defer src="https://apis.google.com/js/api.js"></script>
     <script src="scripts/main.js"></script>
     <script src="scripts/google-spreadsheet.js"></script>
+    <link rel="stylesheet" href="styles/snazzy-info-window.css">
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="https://use.typekit.net/hrl2fmm.css">
     <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5d6bbd9f16b81b0012138c60&product=inline-share-buttons" async="async"></script>
 </head>
 <body>
@@ -27,14 +28,31 @@
             <div class="custom-body">
                 {{#if address}}<p>{{address}}</p>{{/if}}
                 <p><a href="https://www.google.com/maps/search/?api=1&query={{lat}},{{long}}" target="_blank">Get Directions</a></p>
-                {{#if website}}<p>Website: <a href="{{website}}" target="_blank">{{website}}</a></p>{{/if}}
-                {{#if subtitle}}<p>Instagram: <a href="https://www.instagram.com/{{subtitle}}" target="_blank">@{{subtitle}}</a></p>{{/if}}
+                {{#if website}}<p class="custom-body__website">Website: <a href="{{website}}" target="_blank">{{website}}</a></p>{{/if}}
+                <!--{{#if subtitle}}<p>Instagram: <a href="https://www.instagram.com/{{subtitle}}" target="_blank">@{{subtitle}}</a></p>{{/if}}-->
             </div>
             <div id="{{share}}-inline-share-buttons" class="jemmas-grey"></div>
         </section>
     </script>
-    <input id="pac-input" class="controls" type="text" placeholder="Search By Location">
-    <div class="map-canvas">
+    <script id="new-shop-template" type="text/x-handlebars-template">
+        <div>
+            <h2>{{town}}</h2>
+            {{#each objects}}
+            <p><a data-marker="{{Marker}}">{{Name}}</a></p>
+            {{/each}}
+        </div>
+    </script>
+    <div class="greenrooms__container">
+        <div class="greenrooms__container__search">
+            <div class="greenrooms__container__search__close"></div>
+            <input class="greenrooms__container__search__input controls" type="text" placeholder="Search By Location">
+            <p class="greenrooms__container__search__clear-search">Clear Search</p>
+            <div class="greenrooms__container__search__new">
+            </div>
+        </div>
+        <div class="greenrooms__container__map">
+            <div class="map-canvas"></div>
+        </div>
     </div>
 </body>
 </html>
