@@ -3,20 +3,44 @@
  * Created by jotismoore on 01/07/2019.
  */
 
-var defaultPlaces;
+var searchButton,
+    clearSearch,
+    searchInput,
+    searchDrawer,
+    defaultPlaces,
+    normalMarkerIcon = {
+        path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
+        fillColor: '#6e7c7c',
+        fillOpacity: 0.95,
+        scale: 2,
+        strokeColor: '#fff',
+        strokeWeight: 3,
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(12, 24)
+    },
+    activeMarkerIcon = {
+        path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
+        fillColor: '#C4A231',
+        fillOpacity: 0.95,
+        scale: 3,
+        strokeColor: '#fff',
+        strokeWeight: 3,
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(12, 24)
+    };
 
 $(function() {
+    searchButton = document.querySelector('.greenrooms__container__search__close');
+    clearSearch = document.querySelector('.greenrooms__container__search__clear-search');
+    searchInput = document.querySelector('.greenrooms__container__search__input');
+    searchDrawer = document.querySelector('.greenrooms__container__search');
     handleClientLoad();
 });
 
-function triggerMarkerEvents(index) {
-    google.maps.event.trigger(greenroomsmarkers[index], 'click');
-}
-
 function launchMapPlacements(places) {
-    defaultPlaces = places;
 
     var center = { lat: 52.3594635, lng: -1.6668212 };
+    defaultPlaces = places;
 
     if (window.innerWidth < 668) {
         center = { lat: 52.3594635, lng: -1.3668212 };
@@ -32,40 +56,57 @@ function launchMapPlacements(places) {
         center: center
     });
 
-    initPlaces(places, map);
-
-    var searchButton = document.querySelector('.greenrooms__container__search__close'),
-        clearSearch = document.querySelector('.greenrooms__container__search__clear-search');
-
-    function switchClass(event) {
-        if (event.path[1].classList.contains('drawer')) {
-            event.path[1].classList.remove('drawer');
-        } else {
-            event.path[1].classList.add('drawer');
+    window.clearSearchFunction = function() {
+        if (window.innerWidth < 668) {
+            switchClass();
         }
-    }
+        searchInput.value = "";
 
-    function clearSearchFunction(event) {
-        searchButton.removeEventListener('click', switchClass);
-        clearSearch.removeEventListener('click', clearSearchFunction);
-        launchMapPlacements(defaultPlaces);
-    }
+        map.setCenter(center);
+        map.setZoom(7);
 
-    searchButton.addEventListener('click', switchClass, false);
-    clearSearch.addEventListener('click', clearSearchFunction, false);
+        var openWindow = document.querySelector('.custom-window.open');
+        if (openWindow) {
+            for (var i=0;i < window.greenroomsmarkers.length; i++) {
+                window.greenroomsmarkers[i].setIcon(normalMarkerIcon);
+            }
+            var parent = openWindow.parentElement;
+            if (parent) {
+                parent.parentElement.removeChild(parent);
+            }
+        }
+        initPlaces(defaultPlaces, map);
+    };
 
-    var input = document.querySelector('.greenrooms__container__search__input');
+    window.markerTrigger = function(event) {
+        event.preventDefault();
+        var markerData = event.target.getAttribute('data-marker');
+        if (window.innerWidth < 668) {
+            switchClass();
+            setTimeout(function() {
+                google.maps.event.trigger(window.greenroomsmarkers[markerData], 'click');
+            }, 1000)
+        } else {
+            google.maps.event.trigger(window.greenroomsmarkers[markerData], 'click');
+        }
+    };
+
+    initPlaces(defaultPlaces, map);
+
     var options = {
         componentRestrictions: {country: 'uk'}
     };
-    var searchBox = new google.maps.places.SearchBox(input, options);
+    var searchInput = document.querySelector('.greenrooms__container__search__input');
+    var searchBox = new google.maps.places.SearchBox(searchInput, options);
 
-    map.addListener('bounds_changed', function() {
+    google.maps.event.clearListeners(map, 'bounds_changed');
+    google.maps.event.addListener(map, 'bounds_changed', function() {
         searchBox.setBounds(map.getBounds());
     });
 
-    searchBox.addListener('places_changed', function() {
-        var areas = searchBox.getPlaces();
+    google.maps.event.clearListeners(searchBox, 'places_changed');
+    google.maps.event.addListener(searchBox, 'places_changed', function() {
+        var areas = this.getPlaces();
 
         if (areas.length == 0) {
             return;
@@ -92,22 +133,26 @@ function launchMapPlacements(places) {
     });
 }
 
-function initPlaces(places, map) {
+function switchClass() {
+    if (searchDrawer.classList.contains('drawer')) {
+        searchDrawer.classList.remove('drawer');
+        setTimeout(function(){
+            searchButton.classList.remove('active');
+        }, 700);
+    } else {
+        searchDrawer.classList.add('drawer');
+        setTimeout(function(){
+            searchButton.classList.add('active');
+        }, 700);
+    }
+}
 
+function initPlaces(places, map) {
+    clearSearch.removeEventListener('click', clearSearchFunction);
+    searchButton.removeEventListener('click', switchClass);
     // Add a custom marker
-    var markerIcon = {
-        path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
-        fillColor: '#6e7c7c',
-        fillOpacity: 0.95,
-        scale: 2,
-        strokeColor: '#fff',
-        strokeWeight: 3,
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(12, 24)
-    };
 
     var template = Handlebars.compile($('#marker-content-template').html());
-    var widthOverwrite = window.innerWidth > 667 ? 100 : 0;
     window.greenroomsmarkers = [];
     var mark = 0;
 
@@ -139,10 +184,10 @@ function initPlaces(places, map) {
                 if (e.Long && e.Lat) {
                     var marker = new google.maps.Marker({
                         map: map,
-                        icon: markerIcon,
+                        icon: normalMarkerIcon,
                         position: new google.maps.LatLng(e.Lat, e.Long)
                     });
-                    greenroomsmarkers.push(marker);
+                    window.greenroomsmarkers.push(marker);
                     var random = Math.floor(Math.random() * 10000);
                     e.Marker = mark++;
                     var info = new SnazzyInfoWindow($.extend({}, {
@@ -153,9 +198,9 @@ function initPlaces(places, map) {
                         wrapperClass: 'custom-window',
                         edgeOffset: {
                             top: 100,
-                            right: widthOverwrite,
+                            right: 0,
                             bottom: 0,
-                            left: widthOverwrite
+                            left: 0
                         },
                         border: false,
                         closeButtonMarkup: '<button type="button" class="custom-close">&#215;</button>',
@@ -173,6 +218,7 @@ function initPlaces(places, map) {
                         callbacks: {
                             open: function () {
                                 $(this.getWrapper()).addClass('open');
+                                marker.setIcon(activeMarkerIcon);
                             },
                             afterOpen: function () {
                                 var wrapper = $(this.getWrapper());
@@ -188,6 +234,7 @@ function initPlaces(places, map) {
                                 });
                             },
                             beforeClose: function () {
+                                marker.setIcon(normalMarkerIcon);
                                 if (!closeDelayed) {
                                     closeDelayHandler();
                                     return false;
@@ -220,13 +267,29 @@ function initPlaces(places, map) {
         }
     });
 
-    document.querySelector('.greenrooms__container__search__new').innerHTML = fullList;
+    var storeList = document.querySelector('.greenrooms__container__search__new');
+    storeList.innerHTML = "";
+    storeList.innerHTML = fullList;
+    storeList.scrollTop = 0;
+
+    [].forEach.call(storeList.querySelectorAll('.greenrooms__container__search__new a'), function(a) {
+        a.removeEventListener('click', markerTrigger, false);
+        a.addEventListener('click', markerTrigger, false);
+    });
+    searchButton.addEventListener('click', switchClass, false);
+    clearSearch.addEventListener('click', clearSearchFunction, false);
 }
 
 function filterPlaces(places, bounds, map) {
     var searchedPlaces = places.filter(function(e) {
         return (e.Long > bounds['ka'].g && e.Long < bounds['ka'].h) && (e.Lat > bounds['pa'].g && e.Lat < bounds['pa'].h);
     });
-    $('.custom-window').removeClass('active');
+    var openWindow = document.querySelector('.custom-window.open');
+    if (openWindow) {
+        var parent = openWindow.parentElement;
+        if (parent) {
+            parent.parentElement.removeChild(parent);
+        }
+    }
     initPlaces(searchedPlaces, map);
 }

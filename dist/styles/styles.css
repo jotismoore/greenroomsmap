@@ -3,6 +3,8 @@ body {
     font-family: europa,sans-serif;
     font-weight: 400;
     font-style: normal;
+    width: 100%;
+    overflow: hidden;
 }
 
 @keyframes loading-ring {
@@ -363,13 +365,12 @@ body {
     right: -36px;
     width: 36px;
     height: 36px;
-    -webkit-transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     border: 0;
     background-color: rgba(68, 67, 62, 0.8);
     color: #fff;
     font-size: 1.5em;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    padding: 0;
     cursor: pointer; }
 .custom-close:hover, .custom-close:focus, .custom-close:active {
     background-color: rgba(28, 28, 26, 0.8); }
@@ -383,15 +384,35 @@ body {
     justify-content: space-between;
     overflow: hidden;
 }
+@media only screen and (max-width: 667px) {
+    .map-canvas {
+        width: 50%;
+    }
+    .greenrooms__container {
+        width: calc(200% - 2px);
+    }
+    .greenrooms__container__map {
+        /*width: 50%;*/
+    }
+    .custom-window.active {
+        top: -30px;
+    }
+}
 .greenrooms__container__search {
     height: 100%;
     border-right: 1px solid #6e7c7c;
     width: 0;
     position: relative;
+    -webkit-transition: width .7s cubic-bezier(.4,0,.2,1);
     transition: width .7s cubic-bezier(.4,0,.2,1);
 }
 .greenrooms__container__search.drawer {
     width: 379px;
+}
+@media only screen and (max-width: 667px) {
+    .greenrooms__container__search.drawer {
+        width: 80%;
+    }
 }
 .greenrooms__container__search__close {
     width: 50px;
@@ -403,12 +424,21 @@ body {
     cursor: pointer;
     display: inline-block;
     padding: 5px;
-    z-index: 10;
+    z-index: 100;
     box-sizing: border-box;
 }
 .greenrooms__container__search__close:before {
     content: url(../images/Search_Icon.svg);
     color: white;
+    cursor: pointer;
+}
+.greenrooms__container__search__close.active {
+    padding: 12px;
+}
+.greenrooms__container__search__close.active:before {
+    content: url(../images/close.svg);
+    color: white;
+    cursor: pointer;
 }
 .greenrooms__container__search__clear-search {
     overflow: auto;

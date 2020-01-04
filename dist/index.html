@@ -38,7 +38,7 @@
         <div>
             <h2>{{town}}</h2>
             {{#each objects}}
-            <p><a onclick="triggerMarkerEvents({{Marker}})">{{Name}}</a></p>
+            <p><a data-marker="{{Marker}}">{{Name}}</a></p>
             {{/each}}
         </div>
     </script>
