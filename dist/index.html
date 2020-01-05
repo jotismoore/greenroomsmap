@@ -24,13 +24,14 @@
                 {{#if title}}{{title}}{{/if}}
                 {{#if subtitle}}<small><a href="https://www.instagram.com/{{subtitle}}" target="_blank">@{{subtitle}}</a></small>{{/if}}
                 {{#if copy}}<small>{{copy}}</small>{{/if}}
+                {{#if address}}<small>{{address}}</small>{{/if}}
+                <small><a href="https://www.google.com/maps/search/?api=1&query={{lat}},{{long}}" target="_blank">Get Directions</a></small>
+                {{#if website}}<small class="custom-body__website">Website: <a href="{{website}}" target="_blank">{{website}}</a></small>{{/if}}
             </h1>
-            <div class="custom-body">
-                {{#if address}}<p>{{address}}</p>{{/if}}
-                <p><a href="https://www.google.com/maps/search/?api=1&query={{lat}},{{long}}" target="_blank">Get Directions</a></p>
-                {{#if website}}<p class="custom-body__website">Website: <a href="{{website}}" target="_blank">{{website}}</a></p>{{/if}}
+            <!--<div class="custom-body">-->
+
                 <!--{{#if subtitle}}<p>Instagram: <a href="https://www.instagram.com/{{subtitle}}" target="_blank">@{{subtitle}}</a></p>{{/if}}-->
-            </div>
+            <!--</div>-->
             <div id="{{share}}-inline-share-buttons" class="jemmas-grey"></div>
         </section>
     </script>
@@ -45,7 +46,10 @@
     <div class="greenrooms__container">
         <div class="greenrooms__container__search">
             <div class="greenrooms__container__search__close"></div>
-            <input class="greenrooms__container__search__input controls" type="text" placeholder="Search By Location">
+            <div class="greenrooms__container__search__inputcontainer">
+                <input class="greenrooms__container__search__input controls" type="text" placeholder="Search By Location">
+                <span>clear</span>
+            </div>
             <p class="greenrooms__container__search__clear-search">Clear Search</p>
             <div class="greenrooms__container__search__new">
             </div>
