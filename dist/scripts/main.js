@@ -295,12 +295,12 @@ function initPlaces(places, map) {
 
 function filterPlaces(places, bounds, map) {
     var searchedPlaces = places.filter(function(e) {
-        var gLong = Object.keys(bounds)[0];
-        var gLong1 = Object.keys(bounds[gLong])[0];
-        var gLong2 = Object.keys(bounds[gLong])[1];
-        var gLat = Object.keys(bounds)[1];
+        var gLat = Object.keys(bounds)[0];
         var gLat1 = Object.keys(bounds[gLat])[0];
         var gLat2 = Object.keys(bounds[gLat])[1];
+        var gLong = Object.keys(bounds)[1];
+        var gLong1 = Object.keys(bounds[gLong])[0];
+        var gLong2 = Object.keys(bounds[gLong])[1];
         return (e.Long > (bounds[gLong][gLong1] - 0.01) && e.Long < (bounds[gLong][gLong2] + 0.01)) && (e.Lat > (bounds[gLat][gLat1] - 0.01) && e.Lat < (bounds[gLat][gLat2] + 0.01));
     });
 
