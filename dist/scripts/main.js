@@ -295,6 +295,7 @@ function initPlaces(places, map) {
 
 function filterPlaces(places, bounds, map) {
     var searchedPlaces = places.filter(function(e) {
+        console.log(bounds);
         return (e.Long > (bounds['ka'].g - 0.01) && e.Long < (bounds['ka'].h + 0.01)) && (e.Lat > (bounds['pa'].g - 0.01) && e.Lat < (bounds['pa'].h + 0.01));
     });
 
